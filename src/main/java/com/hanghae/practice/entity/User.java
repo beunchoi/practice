@@ -2,6 +2,8 @@ package com.hanghae.practice.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,5 +40,9 @@ public class User {
 
   @Column(nullable = false)
   private String profile = "자기소개 해주세요";
+
+  @Column(nullable = false)
+  @Enumerated(value = EnumType.STRING)
+  private UserRoleEnum role;
 
 }
