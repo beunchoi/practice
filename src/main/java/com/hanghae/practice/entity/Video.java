@@ -1,5 +1,6 @@
 package com.hanghae.practice.entity;
 
+import com.hanghae.practice.dto.VideoRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,11 +30,26 @@ public class Video {
   private String title;
 
   @Column
+  private String userId;
+
+  @Column
   private String url;
 
   @Column
   private Duration totalPlayTime;
 
   @Column
-  private Long views;
+  private long views = 0;
+
+  public Video(String videoId, VideoRequestDto videoRequestDto) {
+    this.videoId = videoId;
+    this.title = videoRequestDto.getTitle();
+    this.userId = videoRequestDto.getUserId();
+    this.url = videoRequestDto.getUrl();
+    this.totalPlayTime = videoRequestDto.getTotalPlayTime();
+  }
+
+  public void increaseViews() {
+    this.views++;
+  }
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,5 +33,18 @@ public class Playback {
   private Duration lastPlayPoint;
 
   @Column
+  private LocalDateTime lastPlayedAt;
+
+  @Column
   private int adViewCount = 0;
+
+  public Playback(String videoId, String userId, LocalDateTime lastPlayedAt) {
+    this.videoId = videoId;
+    this.userId = userId;
+    this.lastPlayedAt = lastPlayedAt;
+  }
+
+  public void updateLastPlayedAt () {
+    this.lastPlayedAt = LocalDateTime.now();
+  }
 }
