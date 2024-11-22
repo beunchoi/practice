@@ -1,5 +1,7 @@
 package com.hanghae.practice.controller;
 
+import com.hanghae.practice.dto.PlaybackRequestDto;
+import com.hanghae.practice.dto.PlaybackResponseDto;
 import com.hanghae.practice.dto.VideoRequestDto;
 import com.hanghae.practice.dto.VideoResponseDto;
 import com.hanghae.practice.service.VideoService;
@@ -30,5 +32,11 @@ public class VideoController {
   public ResponseEntity<?> playVideo(@RequestParam String videoId, @RequestParam String userId) {
     videoService.playVideo(videoId, userId);
     return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @PostMapping("/stop")
+  public ResponseEntity<?> stopVideo(@RequestBody PlaybackRequestDto requestDto) {
+    PlaybackResponseDto responseDto = videoService.stopVideo(requestDto);
+    return ResponseEntity.status(HttpStatus.OK).body(responseDto);
   }
 }

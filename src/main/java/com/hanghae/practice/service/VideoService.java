@@ -1,11 +1,14 @@
 package com.hanghae.practice.service;
 
+import com.hanghae.practice.dto.PlaybackRequestDto;
+import com.hanghae.practice.dto.PlaybackResponseDto;
 import com.hanghae.practice.dto.VideoRequestDto;
 import com.hanghae.practice.dto.VideoResponseDto;
 import com.hanghae.practice.entity.Playback;
 import com.hanghae.practice.entity.Video;
 import com.hanghae.practice.repository.PlaybackRepository;
 import com.hanghae.practice.repository.VideoRepository;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +45,18 @@ public class VideoService {
     } else {
       playbackRepository.save(playback);
     }
+  }
+
+  @Transactional
+  public PlaybackResponseDto stopVideo(PlaybackRequestDto requestDto) {
+    Playback playback = playbackRepository.findByVideoIdAndUserId(
+        requestDto.getVideoId(), requestDto.getUserId())
+        .orElseThrow(() -> new IllegalArgumentException("재생 정보가 존재하지 않습니다."));
+
+    Duration playPoint = Duration.ofSeconds(requestDto.getCurrentPlayPointInSeconds());
+
+    playback.updateLastPlayPoint(playPoint);
+
+    return new PlaybackResponseDto(playback);
   }
 }

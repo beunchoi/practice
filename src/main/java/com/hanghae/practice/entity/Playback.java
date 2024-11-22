@@ -30,7 +30,7 @@ public class Playback {
   private String videoId;
 
   @Column
-  private Duration lastPlayPoint;
+  private Duration lastPlayPoint = Duration.ZERO;
 
   @Column
   private LocalDateTime lastPlayedAt;
@@ -46,5 +46,9 @@ public class Playback {
 
   public void updateLastPlayedAt () {
     this.lastPlayedAt = LocalDateTime.now();
+  }
+
+  public void updateLastPlayPoint(Duration playPoint) {
+    this.lastPlayPoint = playPoint;
   }
 }
