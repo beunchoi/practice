@@ -30,25 +30,28 @@ public class Playback {
   private String videoId;
 
   @Column
-  private Duration lastPlayPoint = Duration.ZERO;
+  private long lastPlayPoint;
+
+  @Column
+  private long startTime;
 
   @Column
   private LocalDateTime lastPlayedAt;
 
   @Column
-  private int adViewCount = 0;
+  private int adViewCount;
 
-  public Playback(String videoId, String userId, LocalDateTime lastPlayedAt) {
+  public Playback(String videoId, String userId, long startTime) {
     this.videoId = videoId;
     this.userId = userId;
-    this.lastPlayedAt = lastPlayedAt;
+    this.startTime = startTime;
   }
 
   public void updateLastPlayedAt () {
     this.lastPlayedAt = LocalDateTime.now();
   }
 
-  public void updateLastPlayPoint(Duration playPoint) {
-    this.lastPlayPoint = playPoint;
+  public void updateLastPlayPoint(long playTime) {
+    this.lastPlayPoint += playTime;
   }
 }

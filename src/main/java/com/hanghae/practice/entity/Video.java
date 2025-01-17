@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.Duration;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,19 +32,15 @@ public class Video {
   private String userId;
 
   @Column
-  private String url;
+  private long totalPlayTime;
 
   @Column
-  private Duration totalPlayTime;
-
-  @Column
-  private long views = 0;
+  private long views;
 
   public Video(String videoId, VideoRequestDto videoRequestDto) {
     this.videoId = videoId;
     this.title = videoRequestDto.getTitle();
     this.userId = videoRequestDto.getUserId();
-    this.url = videoRequestDto.getUrl();
     this.totalPlayTime = videoRequestDto.getTotalPlayTime();
   }
 

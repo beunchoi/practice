@@ -8,12 +8,10 @@ import com.hanghae.practice.entity.Playback;
 import com.hanghae.practice.entity.Video;
 import com.hanghae.practice.repository.PlaybackRepository;
 import com.hanghae.practice.repository.VideoRepository;
-import java.time.Duration;
-import java.time.LocalDateTime;
+import jakarta.transaction.Transactional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -36,15 +34,11 @@ public class VideoService {
         .orElseThrow(() -> new IllegalArgumentException("동영상이 존재하지 않습니다."));
 
     Playback playback = playbackRepository.findByVideoIdAndUserId(video.getVideoId(), userId)
-        .orElseGet(() -> new Playback(video.getVideoId(), userId, LocalDateTime.now()));
+        .orElseGet(() -> new Playback(video.getVideoId(), userId, System.currentTimeMillis()));
 
-    if (playback.getLastPlayedAt().isBefore(LocalDateTime.now().minusSeconds(30))
-        && !video.getUserId().equals(playback.getUserId())) {
-      video.increaseViews();
-      playback.updateLastPlayedAt();
-    } else {
-      playbackRepository.save(playback);
-    }
+    playback.updateLastPlayedAt();
+    playbackRepository.save(playback);
+    video.increaseViews();
   }
 
   @Transactional
@@ -53,9 +47,9 @@ public class VideoService {
         requestDto.getVideoId(), requestDto.getUserId())
         .orElseThrow(() -> new IllegalArgumentException("재생 정보가 존재하지 않습니다."));
 
-    Duration playPoint = Duration.ofSeconds(requestDto.getCurrentPlayPointInSeconds());
+    long playTime = System.currentTimeMillis() - playback.getStartTime();
 
-    playback.updateLastPlayPoint(playPoint);
+    playback.updateLastPlayPoint(playTime);
 
     return new PlaybackResponseDto(playback);
   }

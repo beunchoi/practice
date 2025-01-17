@@ -9,5 +9,5 @@ public class VideoRequestDto {
   private String title;
   private String userId;
   private String url;
-  private Duration totalPlayTime;
+  private long totalPlayTime;
 }

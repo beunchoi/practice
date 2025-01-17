@@ -8,7 +8,7 @@ import lombok.Getter;
 public class PlaybackResponseDto {
   private String videoId;
   private String userId;
-  private Duration lastPlayPoint;
+  private long lastPlayPoint;
 
   public PlaybackResponseDto(Playback playback) {
     this.videoId = playback.getVideoId();
