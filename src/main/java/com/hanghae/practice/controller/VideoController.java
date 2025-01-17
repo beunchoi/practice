@@ -1,6 +1,5 @@
 package com.hanghae.practice.controller;
 
-import com.hanghae.practice.dto.PlaybackRequestDto;
 import com.hanghae.practice.dto.PlaybackResponseDto;
 import com.hanghae.practice.dto.VideoRequestDto;
 import com.hanghae.practice.dto.VideoResponseDto;
@@ -8,7 +7,7 @@ import com.hanghae.practice.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,15 +27,15 @@ public class VideoController {
     return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
   }
 
-  @GetMapping
+  @PostMapping
   public ResponseEntity<?> playVideo(@RequestParam String videoId, @RequestParam String userId) {
-    videoService.playVideo(videoId, userId);
-    return ResponseEntity.status(HttpStatus.OK).build();
+    PlaybackResponseDto responseDto = videoService.playVideo(videoId, userId);
+    return ResponseEntity.status(HttpStatus.OK).body(responseDto);
   }
 
-  @PostMapping("/stop")
-  public ResponseEntity<?> stopVideo(@RequestBody PlaybackRequestDto requestDto) {
-    PlaybackResponseDto responseDto = videoService.stopVideo(requestDto);
+  @PatchMapping("/stop")
+  public ResponseEntity<?> stopVideo(@RequestParam String videoId, @RequestParam String userId) {
+    PlaybackResponseDto responseDto = videoService.stopVideo(videoId, userId);
     return ResponseEntity.status(HttpStatus.OK).body(responseDto);
   }
 }
