@@ -1,4 +1,4 @@
-package com.hanghae.practice.config;
+package com.practice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

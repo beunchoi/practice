@@ -1,7 +1,7 @@
-package com.hanghae.practice.controller;
+package com.practice.controller;
 
-import com.hanghae.practice.dto.KakaoTokenResponseDto;
-import com.hanghae.practice.service.KakaoService;
+import com.practice.dto.KakaoTokenResponseDto;
+import com.practice.service.KakaoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

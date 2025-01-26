@@ -1,6 +1,6 @@
-package com.hanghae.practice.service;
+package com.practice.service;
 
-import com.hanghae.practice.dto.KakaoTokenResponseDto;
+import com.practice.dto.KakaoTokenResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ public class KakaoService {
 
   @Value("${kakao.client_id}")
   private String clientId;
-  private static final String KAUTH_TOKEN_URL_HOST ="https://kauth.kakao.com";
+  private static final String KAUTH_TOKEN_URL_HOST = "https://kauth.kakao.com";
   private static final String KAUTH_USER_URL_HOST = "https://kapi.kakao.com";
 
   public KakaoTokenResponseDto getAccessTokenFromKakao(String code) {

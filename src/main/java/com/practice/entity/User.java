@@ -1,4 +1,4 @@
-package com.hanghae.practice.entity;
+package com.practice.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
