@@ -55,4 +55,8 @@ public class User {
     this.phoneNum = reqDto.getPhoneNum();
     this.role = role;
   }
+
+  public void updateProfile(String profile) {
+    this.profile = profile;
+  }
 }

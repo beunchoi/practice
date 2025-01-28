@@ -2,6 +2,7 @@ package com.practice.userservice.service;
 
 import com.practice.userservice.common.exception.BizRuntimeException;
 import com.practice.userservice.dto.LoginReqDto;
+import com.practice.userservice.dto.ProfileReqDto;
 import com.practice.userservice.dto.SignupReqDto;
 import com.practice.userservice.entity.User;
 import com.practice.userservice.entity.UserRoleEnum;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +56,16 @@ public class UserServiceImpl implements UserService {
     } else {
       throw new BizRuntimeException("잘못된 비밀번호입니다.");
     }
+  }
+
+  @Override
+  @Transactional
+  public String updateProfile(String userId, ProfileReqDto reqDto) {
+    User user = userRepository.findByUserId(userId)
+        .orElseThrow(() -> new BizRuntimeException("존재하지 않는 유저입니다."));
+
+    user.updateProfile(reqDto.getProfile());
+    return user.getProfile();
   }
 
   private boolean isPasswordValid(String password) {
