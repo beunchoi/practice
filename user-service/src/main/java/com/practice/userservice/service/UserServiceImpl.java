@@ -46,7 +46,14 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public String login(LoginReqDto reqDto) {
-    return null;
+    User user = userRepository.findByEmail(reqDto.getEmail())
+        .orElseThrow(() -> new BizRuntimeException("존재하지 않는 유저입니다."));
+
+    if (passwordEncoder.matches(reqDto.getPassword(), user.getPassword())) {
+      return jwtUtil.createAccessToken(user.getUserId(), user.getRole());
+    } else {
+      throw new BizRuntimeException("잘못된 비밀번호입니다.");
+    }
   }
 
   private boolean isPasswordValid(String password) {

@@ -32,4 +32,17 @@ public class UserController {
 
     return ResponseEntity.status(HttpStatus.CREATED).body(message);
   }
+
+  @PostMapping("/login")
+  public ResponseEntity<ResponseMessage> login(@RequestBody LoginReqDto reqDto) {
+    String token = userService.login(reqDto);
+
+    ResponseMessage message = ResponseMessage.builder()
+        .data(token)
+        .statusCode(200)
+        .resultMessage("로그인 성공")
+        .build();
+
+    return ResponseEntity.status(HttpStatus.OK).body(message);
+  }
 }
