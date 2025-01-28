@@ -1,5 +1,6 @@
 package com.practice.userservice.entity;
 
+import com.practice.userservice.dto.SignupReqDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -45,4 +46,13 @@ public class User {
   @Enumerated(value = EnumType.STRING)
   private UserRoleEnum role;
 
+
+  public User(String userId, SignupReqDto reqDto, String password, UserRoleEnum role) {
+    this.userId = userId;
+    this.email = reqDto.getEmail();
+    this.password = password;
+    this.name = reqDto.getName();
+    this.phoneNum = reqDto.getPhoneNum();
+    this.role = role;
+  }
 }
